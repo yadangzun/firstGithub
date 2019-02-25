@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.adam.dao.AgentPlusMapper" >
+    <resultMap id="CreateEntity" type="com.adam.dto.dsfagentplus.request.CreateOrderEntityRequest">
+        <result column="OrderNo" property="orderId"/>
+        <result column="OrderHotelID" property="hotelID"/>
+        <result column="OrderNoOfSupplier" property="supplierOrderId"/>
+        <result column="OrderArrivalDate" property="checkInDate"/>
+        <result column="OrderDepartureDate" property="checkOutDate"/>
+        <result column="OrderMemberFirstName" property="contactFirstName"/>
+        <result column="OrderMemberLastName" property="contactLastName"/>
+        <result column="OrderMemberMobile" property="contractMobile"/>
+        <result column="OrderMemberEmail" property="contactEmail"/>
+        <result column="OrderMemberCountryCode" property="contactNationality"/>
+        <result column="OrderCurrencyID" property="currencyID"/>
+        <result column="OrderAmountTotal" property="totalAmount"/>
+        <result column="OrderBookType" property="paymentType"/>
+        <result column="OrderNumberOfRooms" property="numOfRooms"/>
+        <result column="OrderBookerRemark" property="specialRemark"/>
+        <result column="OrderRoomTypeIDOfSupplier" property="roomTypeID"/>
+        <result column="OrderPlatformId" property="platformId"/>
+        <result column="OrderSessionId" property="searchId"/>
+        <result column="ODGuaranteedStatus" property="guaranteedstatus"/>
+        <result column="ODDistributionChildId" property="distributionChildId"/>
+        <result column="OrderHotelCountryName" property="hotelCountryName"/>
+    </resultMap>
+    <select id="createDsfRequest" resultMap="CreateEntity">
+        select o.*,od.ODGuaranteedStatus,od.ODDistributionChildId,oh.OrderHotelCountryName from Orders o with(nolock)
+        inner join OrderDetail od with(nolock) on od.odorderid = o.id
+        left join orderhotel oh with(nolock)on oh.OrderHotelOrderID = o.id
+        WHERE o.OrderNo = #{orderId}
+    </select>
+
+
+
+
+
+</mapper>
